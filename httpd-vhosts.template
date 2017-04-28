@@ -1,0 +1,17 @@
+<VirtualHost *:80>
+    DocumentRoot $WEB_ROOT
+
+    <Directory $WEB_ROOT>
+        DirectoryIndex /index.php index.php
+        Options +FollowSymLinks
+        AllowOverride All
+        Require all granted
+
+        <FilesMatch "\.php(/.*)?$">
+            <If "-f %{REQUEST_FILENAME}">
+                SetHandler "proxy:fcgi://$PHP_HOST:9000"
+            </If>
+        </FilesMatch>
+    </Directory>
+
+</VirtualHost>
