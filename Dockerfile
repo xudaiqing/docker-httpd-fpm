@@ -22,9 +22,13 @@ COPY httpd.conf /usr/local/apache2/conf/httpd.conf
 
 COPY httpd-vhosts.template /usr/local/apache2/conf/extra/httpd-vhosts.template
 
+COPY docker_entrypoint.sh /docker_entrypoint.sh
+
 ENV PHP_HOST=localhost
 ENV WEB_ROOT=/var/www/html
 
 VOLUME /var/www/html
 
-CMD /bin/sh -c "if ! [ -z $PHP_SOCKET ]; then export PHP_SOCKET="unix:$PHP_SOCKET|"; fi && sed -i 's@\$PHP_SOCKET@'"$PHP_SOCKET"'@g' /usr/local/apache2/conf/extra/httpd-vhosts.template && envsubst '\${PHP_HOST}, \${PHP_SOCKET}, \${WEB_ROOT}' < /usr/local/apache2/conf/extra/httpd-vhosts.template > /usr/local/apache2/conf/extra/httpd-vhosts.conf && httpd-foreground"
+ENTRYPOINT [ "/bin/sh", "/docker_entrypoint.sh" ]
+
+CMD [ "httpd-foreground" ]
