@@ -9,7 +9,7 @@
 
         <FilesMatch "\.php(/.*)?$">
             <If "-f %{REQUEST_FILENAME}">
-                SetHandler "proxy:unix:/var/run/php/php-fpm.sock|fcgi://$PHP_HOST/:9000"
+                SetHandler "proxy:$PHP_SOCKETfcgi://$PHP_HOST:9000/"
             </If>
         </FilesMatch>
     </Directory>
