@@ -1,6 +1,8 @@
 <VirtualHost *:80>
     DocumentRoot $WEB_ROOT
 
+    Define K8S_ENV
+
     <Directory $WEB_ROOT>
         DirectoryIndex index.html index.php
         Options +FollowSymLinks
